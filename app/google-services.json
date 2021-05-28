@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "875624417257",
+    "firebase_url": "https://cs432iot-default-rtdb.firebaseio.com",
+    "project_id": "cs432iot",
+    "storage_bucket": "cs432iot.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875624417257:android:085ab0b4b270a437e7ed78",
+        "android_client_info": {
+          "package_name": "com.example.cristband"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875624417257-7s9q8p2438oi8efdb7034ecpocghmdmu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWQd0FqNA2k-6lp2L3s7pfhdHrkEaj0YQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875624417257-7s9q8p2438oi8efdb7034ecpocghmdmu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

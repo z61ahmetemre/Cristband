@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/display_card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:backgroundTint="#8EB9FF"
+            app:cardCornerRadius="5dp"
+            app:contentPadding="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:padding="8dp"
+                    android:id="@+id/name_text"
+                    android:textSize="30sp"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/heart_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Pulse"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/heart_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:padding="8dp"
+                        android:text="75"
+                        android:textSize="40sp"
+                        android:layout_weight="2"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text="16.30 28 Mayıs 2020"
+                        android:gravity="right"
+                        android:textSize="20sp"
+                        android:layout_weight="1"
+                        android:id="@+id/heart_timestamp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/oxygen_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Saturation"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/oxygen_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:layout_gravity="left"
+                        android:text="94"
+                        android:textSize="40sp"
+                        android:layout_weight="2"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text="16.30 28 Mayıs 2020"
+                        android:gravity="right"
+                        android:textSize="20sp"
+                        android:layout_weight="1"
+                        android:id="@+id/oxygen_timestamp"/>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/temperature_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Temperature"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/temperature_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:layout_gravity="left"
+                        android:text="94"
+                        android:textSize="40sp"
+                        android:layout_weight="2"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text="16.30 28 Mayıs 2020"
+                        android:gravity="right"
+                        android:textSize="20sp"
+                        android:layout_weight="1"
+                        android:id="@+id/temperature_timestamp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/humidity_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Humidity"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/humidity_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:layout_gravity="left"
+                        android:text="94"
+                        android:textSize="40sp"
+                        android:layout_weight="2"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:gravity="right"
+                        android:text="16.30 28 Mayıs 2020"
+                        android:textSize="20sp"
+                        android:layout_weight="1"
+                        android:id="@+id/humidity_timestamp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/accelaration_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Acceleration"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/acceleration_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:padding="8dp"
+                        android:text="75"
+                        android:textSize="40sp"
+                        android:layout_weight="2"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text="16.30 28 Mayıs 2020"
+                        android:gravity="right"
+                        android:textSize="20sp"
+                        android:layout_weight="1"
+                        android:id="@+id/acceleration_timestamp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
