@@ -2,9 +2,12 @@ package com.example.cristband;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
     GraphView         heartGraph;
     GraphView         oxygenGraph;
     GraphView         humidityGraph;
+    Button            showHideGraphs;
+    CardView          heartCard;
+    CardView          oxygenCard;
+    CardView          tempCard;
+    CardView          bodyTempCard;
+    CardView          humidityCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
         heartGraph                = findViewById(R.id.graph_heart);
         oxygenGraph               = findViewById(R.id.graph_saturation);
         humidityGraph             = findViewById(R.id.graph_humidity);
+        showHideGraphs            = findViewById(R.id.show_hide_graphs);
+        heartCard                 = findViewById(R.id.card_pulse);
+        oxygenCard                = findViewById(R.id.card_saturation);
+        tempCard                  = findViewById(R.id.card_temp);
+        bodyTempCard              = findViewById(R.id.card_temp_body);
+        humidityCard              = findViewById(R.id.card_humidity);
 
         final UserHolder[] holder = new UserHolder[1];
         holder[0] = new UserHolder();
@@ -84,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     user.setUserInformation(holder[0]);
                     nameText.setText("" + user.getName());
                     hearthText.setText( ""+ (int)user.getHeart().get(user.getHeart().size() -1).getData());
-                    oxygenText.setText("" + user.getOxygen().get(user.getOxygen().size() - 1).getData());
+                    oxygenText.setText("" + (int)user.getOxygen().get(user.getOxygen().size() - 1).getData());
                     temperatureText.setText("" + user.getTemperature().get(user.getTemperature().size() - 1).getData());
                     bodyTemperatureText.setText("" + user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getData());
                     humidityText.setText("" + (int) user.getHumidity().get(user.getHumidity().size() - 1).getData());
@@ -105,6 +120,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        showHideGraphs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(showHideGraphs.getText().equals("Hıde Graphs")) {
+                    showHideGraphs.setText("Show Graphs");
+                    heartCard.setVisibility(View.GONE);
+                    oxygenCard.setVisibility(View.GONE);
+                    tempCard.setVisibility(View.GONE);
+                    bodyTempCard.setVisibility(View.GONE);
+                    humidityCard.setVisibility(View.GONE);
+                } else if(showHideGraphs.getText().equals("Show Graphs")) {
+                    showHideGraphs.setText("Hıde Graphs");
+                    heartCard.setVisibility(View.VISIBLE);
+                    oxygenCard.setVisibility(View.VISIBLE);
+                    tempCard.setVisibility(View.VISIBLE);
+                    bodyTempCard.setVisibility(View.VISIBLE);
+                    humidityCard.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -169,6 +205,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        //**************************************
+        //Outside temperature graph
+        //**************************************
+        LineGraphSeries<DataPoint> seriestemp = new LineGraphSeries<>();
+        for(int i = 0; i < user.getTemperature().size(); i++) {
+            seriestemp.appendData(new DataPoint(getDateObject(user.getTemperature().get(i).getTimestamp()), user.getTemperature().get(i).getData()), true, user.getTemperature().size());
+        }
+        seriestemp.setTitle("Temperature(outside)");
+        tempGraph.addSeries(seriestemp);
+
+        tempGraph.getLegendRenderer().setVisible(true);
+        tempGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        tempGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if (isValueX) {
+                    Format formatter = new SimpleDateFormat(/*"yyyy-MM-dd*/" HH:mm:ss");
+                    return formatter.format(value);
+                }
+                return super.formatLabel(value, isValueX);
+            }
+        });
+
         //**************************************
         //Saturation graph
         //**************************************
@@ -193,7 +253,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         //**************************************
         //Body temperature graph
         //**************************************
@@ -217,28 +276,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //**************************************
-        //Outside temperature graph
-        //**************************************
-        LineGraphSeries<DataPoint> seriestemp = new LineGraphSeries<>();
-        for(int i = 0; i < user.getTemperature().size(); i++) {
-            seriestemp.appendData(new DataPoint(getDateObject(user.getTemperature().get(i).getTimestamp()), user.getTemperature().get(i).getData()), true, user.getTemperature().size());
-        }
-        seriestemp.setTitle("Temperature(outside)");
-        tempGraph.addSeries(seriestemp);
 
-        tempGraph.getLegendRenderer().setVisible(true);
-        tempGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        tempGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
-            @Override
-            public String formatLabel(double value, boolean isValueX) {
-                if (isValueX) {
-                    Format formatter = new SimpleDateFormat(/*"yyyy-MM-dd*/" HH:mm:ss");
-                    return formatter.format(value);
-                }
-                return super.formatLabel(value, isValueX);
-            }
-        });
+
 
     }
 }
