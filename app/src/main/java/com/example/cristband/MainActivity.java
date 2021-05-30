@@ -13,7 +13,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jjoe64.graphview.DefaultLabelFormatter;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -36,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
     TextView          bodyTemperatureTimestamp;
     TextView          humidityTimestamp;
     //TextView          accelerationTimestamp;
+    GraphView         tempGraph;
+    GraphView         bodytempGraph;
+    GraphView         heartGraph;
+    GraphView         oxygenGraph;
+    GraphView         humidityGraph;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
         bodyTemperatureTimestamp  = findViewById(R.id.temperature_body_timestamp);
         humidityTimestamp         = findViewById(R.id.humidity_timestamp);
       //accelerationTimestamp     = findViewById(R.id.acceleration_timestamp);
+        tempGraph                 = findViewById(R.id.graph_temperature);
+        bodytempGraph             = findViewById(R.id.graph_temperature_body);
+        heartGraph                = findViewById(R.id.graph_heart);
+        oxygenGraph               = findViewById(R.id.graph_saturation);
+        humidityGraph             = findViewById(R.id.graph_humidity);
 
         final UserHolder[] holder = new UserHolder[1];
         holder[0] = new UserHolder();
@@ -71,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     oxygenText.setText("" + user.getOxygen().get(user.getOxygen().size() - 1).getData());
                     temperatureText.setText("" + user.getTemperature().get(user.getTemperature().size() - 1).getData());
                     bodyTemperatureText.setText("" + user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getData());
-                    humidityText.setText("" + user.getHumidity().get(user.getHumidity().size() - 1).getData());
+                    humidityText.setText("" + (int) user.getHumidity().get(user.getHumidity().size() - 1).getData());
                     //accelerationText.setText("" + user.getAccerelator().get(user.getAccerelator().size() - 1).getData());
                     heartTimestamp.setText( getDate(user.getHeart().get(user.getHeart().size() -1).getTimestamp()));
                     oxygenTimestamp.setText( getDate(user.getOxygen().get(user.getOxygen().size() -1).getTimestamp()));
@@ -79,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
                     bodyTemperatureTimestamp.setText(getDate(user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getTimestamp()));
                     humidityTimestamp.setText( getDate(user.getHumidity().get(user.getHumidity().size() -1).getTimestamp()));
                     //accelerationTimestamp.setText( ""+ user.getAccerelator().get(user.getAccerelator().size() -1).getTimestamp());
+                    createChart();
+
                 } catch (Exception e) {
                     Log.e("**********SYNC ERROR***", "ERROR: onDataChange() " + e);
                 }
@@ -99,4 +117,130 @@ public class MainActivity extends AppCompatActivity {
         return sdf.format(date);
     }
 
+    private Date getDateObject(long time) {
+        return new Date(time*1000L);
+    }
+
+    private void createChart() {
+
+        //**************************************
+        //Body temperature graph
+        //**************************************
+        LineGraphSeries<DataPoint> seriestempbody = new LineGraphSeries<>();
+        for(int i = 0; i < user.getTemperaturebody().size(); i++) {
+            seriestempbody.appendData(new DataPoint(getDateObject(user.getTemperaturebody().get(i).getTimestamp()), user.getTemperaturebody().get(i).getData()), true, user.getTemperaturebody().size());
+        }
+        seriestempbody.setTitle("Temperature(Body)");
+        bodytempGraph.addSeries(seriestempbody);
+
+        bodytempGraph.getLegendRenderer().setVisible(true);
+        bodytempGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        bodytempGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if (isValueX) {
+                    Format formatter = new SimpleDateFormat(/*"yyyy-MM-dd*/" HH:mm:ss");
+                    return formatter.format(value);
+                }
+                return super.formatLabel(value, isValueX);
+            }
+        });
+
+        //**************************************
+        //Outside temperature graph
+        //**************************************
+        LineGraphSeries<DataPoint> seriestemp = new LineGraphSeries<>();
+        for(int i = 0; i < user.getTemperature().size(); i++) {
+            seriestemp.appendData(new DataPoint(getDateObject(user.getTemperature().get(i).getTimestamp()), user.getTemperature().get(i).getData()), true, user.getTemperature().size());
+        }
+        seriestemp.setTitle("Temperature(outside)");
+        tempGraph.addSeries(seriestemp);
+
+        tempGraph.getLegendRenderer().setVisible(true);
+        tempGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        tempGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if (isValueX) {
+                    Format formatter = new SimpleDateFormat(/*"yyyy-MM-dd*/" HH:mm:ss");
+                    return formatter.format(value);
+                }
+                return super.formatLabel(value, isValueX);
+            }
+        });
+
+
+        //**************************************
+        //heart graph
+        //**************************************
+        LineGraphSeries<DataPoint> seriesheart = new LineGraphSeries<>();
+        for(int i = 0; i < user.getHumidity().size(); i++) {
+            seriesheart.appendData(new DataPoint(getDateObject(user.getHeart().get(i).getTimestamp()), (double)user.getHeart().get(i).getData()), true, user.getHeart().size());
+        }
+        seriesheart.setTitle("Pulse");
+        heartGraph.addSeries(seriesheart);
+
+        heartGraph.getLegendRenderer().setVisible(true);
+        heartGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        heartGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if (isValueX) {
+                    Format formatter = new SimpleDateFormat(/*"yyyy-MM-dd*/" HH:mm:ss");
+                    return formatter.format(value);
+                }
+                return super.formatLabel(value, isValueX);
+            }
+        });
+
+        //**************************************
+        //humidity graph
+        //**************************************
+        LineGraphSeries<DataPoint> serieshumidity = new LineGraphSeries<>();
+        for(int i = 0; i < user.getHumidity().size(); i++) {
+            serieshumidity.appendData(new DataPoint(getDateObject(user.getHumidity().get(i).getTimestamp()), (double)user.getHumidity().get(i).getData()), true, user.getHumidity().size());
+        }
+        serieshumidity.setTitle("Humidity");
+        humidityGraph.addSeries(serieshumidity);
+
+        humidityGraph.getLegendRenderer().setVisible(true);
+        humidityGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        humidityGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if (isValueX) {
+                    Format formatter = new SimpleDateFormat(/*"yyyy-MM-dd*/" HH:mm:ss");
+                    return formatter.format(value);
+                }
+                return super.formatLabel(value, isValueX);
+            }
+        });
+
+        //**************************************
+        //Saturation graph
+        //**************************************
+
+        LineGraphSeries<DataPoint> seriesoxygen = new LineGraphSeries<>();
+        for(int i = 0; i < user.getOxygen().size(); i++) {
+            serieshumidity.appendData(new DataPoint(getDateObject(user.getOxygen().get(i).getTimestamp()), (double)user.getOxygen().get(i).getData()), true, user.getOxygen().size());
+        }
+        seriesoxygen.setTitle("Saturation");
+        oxygenGraph.addSeries(seriesoxygen);
+
+        oxygenGraph.getLegendRenderer().setVisible(true);
+        oxygenGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        oxygenGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if (isValueX) {
+                    Format formatter = new SimpleDateFormat(/*"yyyy-MM-dd*/" HH:mm:ss");
+                    return formatter.format(value);
+                }
+                return super.formatLabel(value, isValueX);
+            }
+        });
+
+
+
+    }
 }
