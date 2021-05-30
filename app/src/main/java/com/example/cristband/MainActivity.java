@@ -124,53 +124,6 @@ public class MainActivity extends AppCompatActivity {
     private void createChart() {
 
         //**************************************
-        //Body temperature graph
-        //**************************************
-        LineGraphSeries<DataPoint> seriestempbody = new LineGraphSeries<>();
-        for(int i = 0; i < user.getTemperaturebody().size(); i++) {
-            seriestempbody.appendData(new DataPoint(getDateObject(user.getTemperaturebody().get(i).getTimestamp()), user.getTemperaturebody().get(i).getData()), true, user.getTemperaturebody().size());
-        }
-        seriestempbody.setTitle("Temperature(Body)");
-        bodytempGraph.addSeries(seriestempbody);
-
-        bodytempGraph.getLegendRenderer().setVisible(true);
-        bodytempGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        bodytempGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
-            @Override
-            public String formatLabel(double value, boolean isValueX) {
-                if (isValueX) {
-                    Format formatter = new SimpleDateFormat(/*"yyyy-MM-dd*/" HH:mm:ss");
-                    return formatter.format(value);
-                }
-                return super.formatLabel(value, isValueX);
-            }
-        });
-
-        //**************************************
-        //Outside temperature graph
-        //**************************************
-        LineGraphSeries<DataPoint> seriestemp = new LineGraphSeries<>();
-        for(int i = 0; i < user.getTemperature().size(); i++) {
-            seriestemp.appendData(new DataPoint(getDateObject(user.getTemperature().get(i).getTimestamp()), user.getTemperature().get(i).getData()), true, user.getTemperature().size());
-        }
-        seriestemp.setTitle("Temperature(outside)");
-        tempGraph.addSeries(seriestemp);
-
-        tempGraph.getLegendRenderer().setVisible(true);
-        tempGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        tempGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
-            @Override
-            public String formatLabel(double value, boolean isValueX) {
-                if (isValueX) {
-                    Format formatter = new SimpleDateFormat(/*"yyyy-MM-dd*/" HH:mm:ss");
-                    return formatter.format(value);
-                }
-                return super.formatLabel(value, isValueX);
-            }
-        });
-
-
-        //**************************************
         //heart graph
         //**************************************
         LineGraphSeries<DataPoint> seriesheart = new LineGraphSeries<>();
@@ -241,6 +194,51 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        //**************************************
+        //Body temperature graph
+        //**************************************
+        LineGraphSeries<DataPoint> seriestempbody = new LineGraphSeries<>();
+        for(int i = 0; i < user.getTemperaturebody().size(); i++) {
+            seriestempbody.appendData(new DataPoint(getDateObject(user.getTemperaturebody().get(i).getTimestamp()), user.getTemperaturebody().get(i).getData()), true, user.getTemperaturebody().size());
+        }
+        seriestempbody.setTitle("Temperature(Body)");
+        bodytempGraph.addSeries(seriestempbody);
+
+        bodytempGraph.getLegendRenderer().setVisible(true);
+        bodytempGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        bodytempGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if (isValueX) {
+                    Format formatter = new SimpleDateFormat(/*"yyyy-MM-dd*/" HH:mm:ss");
+                    return formatter.format(value);
+                }
+                return super.formatLabel(value, isValueX);
+            }
+        });
+
+        //**************************************
+        //Outside temperature graph
+        //**************************************
+        LineGraphSeries<DataPoint> seriestemp = new LineGraphSeries<>();
+        for(int i = 0; i < user.getTemperature().size(); i++) {
+            seriestemp.appendData(new DataPoint(getDateObject(user.getTemperature().get(i).getTimestamp()), user.getTemperature().get(i).getData()), true, user.getTemperature().size());
+        }
+        seriestemp.setTitle("Temperature(outside)");
+        tempGraph.addSeries(seriestemp);
+
+        tempGraph.getLegendRenderer().setVisible(true);
+        tempGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        tempGraph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if (isValueX) {
+                    Format formatter = new SimpleDateFormat(/*"yyyy-MM-dd*/" HH:mm:ss");
+                    return formatter.format(value);
+                }
+                return super.formatLabel(value, isValueX);
+            }
+        });
 
     }
 }
