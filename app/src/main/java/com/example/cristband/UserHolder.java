@@ -6,7 +6,7 @@ public class UserHolder {
 
     private String        name;
     private String        mail;
-    private int gender;
+    private int           gender;
     private int           age;
     private String        password;
     private List<Data>    accerelator;
@@ -14,6 +14,7 @@ public class UserHolder {
     private List<Data>    humidity;
     private List<Data>    oxygen;
     private List<Data>    temperature;
+    private List<Data>    temperaturebody;
     private int           lastindex;
     private String        lastseen;
     private String        updater;
@@ -99,6 +100,14 @@ public class UserHolder {
 
     public void setTemperature(List<Data> temperature) {
         this.temperature = temperature;
+    }
+
+    public List<Data> getTemperatureBody() {
+        return temperaturebody;
+    }
+
+    public void setTemperatureBody(List<Data> temperatureBody) {
+        this.temperaturebody = temperatureBody;
     }
 
     public int getLastindex() {

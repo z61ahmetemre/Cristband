@@ -27,6 +27,7 @@ public class User {
     private List<Data>    humidity;
     private List<Data>    oxygen;
     private List<Data>    temperature;
+    private List<Data>    temperaturebody;
     private int           lastindex;
     private String        lastseen;
     private String        updater;
@@ -149,6 +150,14 @@ public class User {
         this.updater = updater;
     }
 
+    public List<Data> getTemperaturebody() {
+        return temperaturebody;
+    }
+
+    public void setTemperaturebody(List<Data> temperaturebody) {
+        this.temperaturebody = temperaturebody;
+    }
+
     public void synchronize() {
         final UserHolder[] holder = new UserHolder[1];
         holder[0] = new UserHolder();
@@ -194,6 +203,7 @@ public class User {
         setHeart(holder.getHeart());
         setOxygen(holder.getOxygen());
         setTemperature(holder.getTemperature());
+        setTemperaturebody(holder.getTemperatureBody());
         setLastindex(holder.getLastindex());
         setLastseen(holder.getLastseen());
         setUpdater(holder.getUpdater());

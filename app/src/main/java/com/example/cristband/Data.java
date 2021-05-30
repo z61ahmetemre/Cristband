@@ -6,18 +6,18 @@ import java.util.TimeZone;
 
 public class Data {
 
-    int      data;
-    long     timestamp;
+    float      data;
+    long       timestamp;
 
-    public double getData() {
+    public float getData() {
         return data;
     }
 
-    public void setData(int data) {
+    public void setData(float data) {
         this.data = data;
     }
 
-    public double getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
@@ -27,8 +27,8 @@ public class Data {
 
     private String getDate(long time) {
         Date date = new Date(time*1000L); // *1000 is to convert seconds to milliseconds
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy "); // the format of your date
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT-4"));
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm, dd MMM yyyy "); // the format of your date
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+3"));
 
         return sdf.format(date);
     }
