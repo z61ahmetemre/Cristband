@@ -3,6 +3,8 @@ package com.example.cristband;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -29,6 +31,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -115,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
                     bodyTemperatureTimestamp.setText(getDate(user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getTimestamp()));
                     humidityTimestamp.setText( getDate(user.getHumidity().get(user.getHumidity().size() -1).getTimestamp()));
                     //accelerationTimestamp.setText( ""+ user.getAccerelator().get(user.getAccerelator().size() -1).getTimestamp());
-                    //createChart();
+                    checkDataIfInLimits();
+                    checkIsDataComing();
+                    createChart();
 
                 } catch (Exception e) {
                     Log.e("**********SYNC ERROR***", "ERROR: onDataChange() " + e);
@@ -282,11 +287,133 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void notification() {
+    private void notification(String message) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel =
                     new NotificationChannel("n", "n", NotificationManager.IMPORTANCE_DEFAULT);
-
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
         }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "n")
+                .setContentText("Code")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setAutoCancel(true)
+                .setContentText(message);
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        managerCompat.notify(998,builder.build());
+    }
+
+    private void notification2(String message) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel =
+                    new NotificationChannel("m", "m", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "n")
+                .setContentText("Code")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setAutoCancel(true)
+                .setContentText(message);
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        managerCompat.notify(999,builder.build());
+    }
+
+    private void notification3(String message) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel =
+                    new NotificationChannel("m", "m", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "n")
+                .setContentText("Code")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setAutoCancel(true)
+                .setContentText(message);
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        managerCompat.notify(997,builder.build());
+    }
+
+    private void notification4() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel =
+                    new NotificationChannel("m", "m", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "n")
+                .setContentText("Code")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setAutoCancel(true)
+                .setContentText("NO DATA ACHIEVED FOR 10 MINUTES!");
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        managerCompat.notify(996,builder.build());
+    }
+
+    private void checkDataIfInLimits() {
+        if (user.getHeart().get(user.getHeart().size() - 1).getData() <= 60) {
+            notification("Pulse is low: " + user.getHeart().get(user.getHeart().size() - 1).getData() + " at " + getDate(user.getHeart().get(user.getHeart().size() - 1).getTimestamp()));
+        } else if (user.getHeart().get(user.getHeart().size() - 1).getData() > 95) {
+            notification("Pulse is high: " + user.getHeart().get(user.getHeart().size() - 1).getData() + " at " + getDate(user.getHeart().get(user.getHeart().size() - 1).getTimestamp()));
+        }
+
+        if (user.getOxygen().get(user.getOxygen().size() - 1).getData() <= 90) {
+            notification2("Saturation is low: " + user.getOxygen().get(user.getOxygen().size() - 1).getData() + " at " + getDate(user.getOxygen().get(user.getOxygen().size() - 1).getTimestamp()));
+        } else if (user.getOxygen().get(user.getOxygen().size() - 1).getData() < 80) {
+            notification2("Saturation is too low: " + user.getOxygen().get(user.getOxygen().size() - 1).getData() + " at " + getDate(user.getOxygen().get(user.getOxygen().size() - 1).getTimestamp()));
+        }
+
+        if (user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getData() < 35.5) {
+            notification3("Body temperature is low: " + user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getData() + " at " + getDate(user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getTimestamp()));
+        } else if (user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getData() > 36) {
+            notification3("Body temperature is high: " + user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getData() + " at " + getDate(user.getTemperaturebody().get(user.getOxygen().size() - 1).getTimestamp()));
+        }
+    }
+
+    private void checkIsDataComing() {
+        Date currentTime     = Calendar.getInstance().getTime();
+        Date lastConnection  = getDateObject(user.getTemperaturebody().get(user.getOxygen().size() - 1).getTimestamp());
+
+        if (printDifference(currentTime,lastConnection) >= 10)
+            notification4();
+    }
+
+    public long printDifference(Date startDate, Date endDate) {
+        //milliseconds
+        long different = endDate.getTime() - startDate.getTime();
+
+        System.out.println("startDate : " + startDate);
+        System.out.println("endDate : "+ endDate);
+        System.out.println("different : " + different);
+
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+
+        long elapsedDays = different / daysInMilli;
+        different = different % daysInMilli;
+
+        long elapsedHours = different / hoursInMilli;
+        different = different % hoursInMilli;
+
+        long elapsedMinutes = different / minutesInMilli;
+        different = different % minutesInMilli;
+
+        long elapsedSeconds = different / secondsInMilli;
+
+        System.out.printf(
+                "%d days, %d hours, %d minutes, %d seconds%n",
+                elapsedDays, elapsedHours, elapsedMinutes, elapsedSeconds);
+        return elapsedMinutes;
     }
 }
