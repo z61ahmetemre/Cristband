@@ -9,6 +9,12 @@ public class Data {
     float      data;
     long       timestamp;
 
+    public Data() { }
+
+    public Data(float data, long timestamp) {
+        this.data      = data;
+        this.timestamp = timestamp;
+    }
     public float getData() {
         return data;
     }

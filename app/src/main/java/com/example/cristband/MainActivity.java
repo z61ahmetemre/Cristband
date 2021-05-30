@@ -4,7 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -110,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                     bodyTemperatureTimestamp.setText(getDate(user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getTimestamp()));
                     humidityTimestamp.setText( getDate(user.getHumidity().get(user.getHumidity().size() -1).getTimestamp()));
                     //accelerationTimestamp.setText( ""+ user.getAccerelator().get(user.getAccerelator().size() -1).getTimestamp());
-                    createChart();
+                    //createChart();
 
                 } catch (Exception e) {
                     Log.e("**********SYNC ERROR***", "ERROR: onDataChange() " + e);
@@ -163,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         //heart graph
         //**************************************
         LineGraphSeries<DataPoint> seriesheart = new LineGraphSeries<>();
-        for(int i = 0; i < user.getHumidity().size(); i++) {
+        for(int i = 0; i < user.getHeart().size(); i++) {
             seriesheart.appendData(new DataPoint(getDateObject(user.getHeart().get(i).getTimestamp()), (double)user.getHeart().get(i).getData()), true, user.getHeart().size());
         }
         seriesheart.setTitle("Pulse");
@@ -275,9 +280,13 @@ public class MainActivity extends AppCompatActivity {
                 return super.formatLabel(value, isValueX);
             }
         });
+    }
 
+    private void notification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel =
+                    new NotificationChannel("n", "n", NotificationManager.IMPORTANCE_DEFAULT);
 
-
-
+        }
     }
 }

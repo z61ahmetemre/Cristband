@@ -33,8 +33,7 @@ public class SignupActivity extends AppCompatActivity implements Serializable, O
     private static final String TAG = "SignupActivity";
 
     private FirebaseAuth mAuth;
-    //private ServerManager sm;
-    //User user;
+    User user;
     private DatabaseReference mDatabase;
 
     @BindView(R.id.input_name)
@@ -64,8 +63,7 @@ public class SignupActivity extends AppCompatActivity implements Serializable, O
         ButterKnife.bind(this);
 
         mAuth = FirebaseAuth.getInstance();
-//        sm = ServerManager.getInstance();
-//        user = User.getInstance();
+        user = User.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
@@ -144,26 +142,26 @@ public class SignupActivity extends AppCompatActivity implements Serializable, O
         setResult(RESULT_OK, null);
 
         //Initialize the user with given information
-        /*user.setName(_nameText.getText().toString());
-        user.setUserID(_emailText.getText().toString());
+        user.setName(_nameText.getText().toString());
+        user.setMail(_emailText.getText().toString());
         user.setAge(Integer.parseInt(_ageText.getText().toString()));
         user.setPassword(_passwordText.getText().toString());
         if (_maleButton.isChecked())
-            user.setSex(1);
+            user.setGender(1);
         else if (_femaleButton.isChecked())
-            user.setSex(0);
+            user.setGender(0);
         else if (_noGenderButton.isChecked())
-            user.setSex(-1);
+            user.setGender(-1);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String date = sdf.format(new Date());
         System.out.println(date);
 
-        user.setRegisrationDate(date);
 
         //Authentication is OK. Finish the creating account part.
-        sm.createAccount();
-*/
+        mDatabase.child(mAuth.getUid()).setValue(user);
+
+
         Toast.makeText(SignupActivity.this, "Welcome to Cristband",
                 Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
