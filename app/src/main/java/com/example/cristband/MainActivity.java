@@ -374,7 +374,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getData() < 35.5) {
             notification3("Body temperature is low: " + user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getData() + " at " + getDate(user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getTimestamp()));
-        } else if (user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getData() > 36) {
+        } else if (user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getData() > 37) {
             notification3("Body temperature is high: " + user.getTemperaturebody().get(user.getTemperaturebody().size() - 1).getData() + " at " + getDate(user.getTemperaturebody().get(user.getOxygen().size() - 1).getTimestamp()));
         }
     }

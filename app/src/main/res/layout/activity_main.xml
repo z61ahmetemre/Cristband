@@ -32,7 +32,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Name"
+                        android:text="Ahmet Yılmaz"
                         android:padding="8dp"
                         android:id="@+id/name_text"
                         android:textSize="30sp"
@@ -153,22 +153,23 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/temperature_data"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:gravity="center"
-                            android:text="94"
-                            android:textSize="40sp"
-                            android:layout_weight="2"/>
-
-                        <TextView
                             android:id="@+id/temperature_body_data"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
                             android:gravity="center"
-                            android:text="94"
+                            android:text="36.6"
+                            android:textSize="40sp"
+                            android:layout_weight="2"/>
+
+                        <TextView
+                            android:id="@+id/temperature_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            android:gravity="center"
+                            android:text="23.4
+"
                             android:textSize="40sp"
                             android:layout_weight="2"/>
 
@@ -224,7 +225,7 @@
                             android:layout_height="wrap_content"
                             android:padding="8dp"
                             android:gravity="center"
-                            android:text="94"
+                            android:text="43"
                             android:textSize="40sp"
                             android:layout_weight="2"/>
                     </LinearLayout>

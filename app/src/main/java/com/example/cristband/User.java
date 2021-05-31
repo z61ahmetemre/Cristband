@@ -29,7 +29,7 @@ public class User {
     private List<Data>    temperature;
     private List<Data>    temperaturebody;
     private int           lastindex;
-    private String        lastseen;
+    private long          lastseen;
     private String        updater;
 
     private DatabaseReference   mDatabase;
@@ -134,11 +134,11 @@ public class User {
         this.lastindex = lastindex;
     }
 
-    public String getLastseen() {
+    public long getLastseen() {
         return lastseen;
     }
 
-    public void setLastseen(String lastseen) {
+    public void setLastseen(long lastseen) {
         this.lastseen = lastseen;
     }
 
